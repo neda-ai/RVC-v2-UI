@@ -30,20 +30,57 @@ Then follow the instructions in the notebook to run the webui.
 
 ### Install Git and Python
 
+
 Follow the instructions [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) to install Git on your computer. Also follow this [guide](https://realpython.com/installing-python/) to install Python **VERSION 3.9** if you haven't already. Using other versions of Python may result in dependency conflicts.
+
+Alternatively, you can use pyenv to manage Python versions:
+
+1. Install pyenv following the instructions [here](https://github.com/pyenv/pyenv#installation).
+2. Install Python 3.9:
+```
+pyenv install 3.9
+```
+3. Set it as your local Python version:
+```
+pyenv local 3.9
+```
+
 
 ### Install ffmpeg
 
 Follow the instructions [here](https://www.hostinger.com/tutorials/how-to-install-ffmpeg) to install ffmpeg on your computer.
 
 
-### Clone RVC-v2-UI repository
+### Clone RVC-v2-UI repository and set up virtual environment
 
-Open a command line window and run these commands to clone this entire repository and install the additional dependencies required.
+Open a command line window and run these commands to clone this entire repository, create a virtual environment, and install the additional dependencies required.
 
 ```
 git clone https://github.com/PseudoRAM/RVC-v2-UI
 cd RVC-v2-UI
+```
+#### Create and activate virtual environment
+##### Using pyenv
+```
+pyenv exec python -m venv venv
+```
+##### Not using pyenv
+```
+python -m venv venv
+```
+
+##### Activate virtual environment
+##### Windows
+```
+venv\Scripts\activate
+```
+##### macOS and Linux
+```
+source venv/bin.activate
+```
+
+#### Install dependencies
+```
 pip install -r requirements.txt
 ```
 
