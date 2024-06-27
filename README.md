@@ -1,39 +1,18 @@
-# AICoverGen
+# RVC Voice Changer
 
-[![Replicate](https://replicate.com/zsxkib/realistic-voice-cloning/badge)](https://replicate.com/zsxkib/realistic-voice-cloning)
+[![Replicate](https://replicate.com/zsxkib/rvc-voice-changer/badge)](https://replicate.com/zsxkib/rvc-voice-changer)
 
-An autonomous pipeline to create covers with any RVC v2 trained AI voice from YouTube videos or a local audio file. For developers who may want to add a singing functionality into their AI assistant/chatbot/vtuber, or for people who want to hear their favourite characters sing their favourite song.
-
-Showcase: https://www.youtube.com/watch?v=2qZuE4WM7CM
-
-Setup Guide: https://www.youtube.com/watch?v=pdlhk4vVHQk
+An autonomous pipeline to change voices using any RVC v2 trained AI voice model. This tool can be used to apply voice conversion to any audio input.
 
 ![](images/webui_generate.png?raw=true)
 
-WebUI is under constant development and testing, but you can try it out right now on both local and colab!
+WebUI is under constant development and testing, but you can try it out right now on local!
 
-## Changelog
+## Update RVC Voice Changer to latest version
 
-- WebUI for easier conversions and downloading of voice models
-- Support for cover generations from a local audio file
-- Option to keep intermediate files generated. e.g. Isolated vocals/instrumentals
-- Download suggested public voice models from table with search/tag filters
-- Support for Pixeldrain download links for voice models
-- Implement new rmvpe pitch extraction technique for faster and higher quality vocal conversions
-- Volume control for AI main vocals, backup vocals and instrumentals
-- Index Rate for Voice conversion
-- Reverb Control for AI main vocals
-- Local network sharing option for webui
-- Extra RVC options - filter_radius, rms_mix_rate, protect
-- Local file upload via file browser option
-- Upload of locally trained RVC v2 models via WebUI
-- Pitch detection method control, e.g. rmvpe/mangio-crepe
-- Pitch change for vocals and instrumentals together. Same effect as changing key of song in Karaoke.
-- Audio output format option: wav or mp3.
+Install and pull any new requirements and changes by opening a command line window in the `RVC-v2-UI` directory and running the following commands.
 
-## Update AICoverGen to latest version
 
-Install and pull any new requirements and changes by opening a command line window in the `AICoverGen` directory and running the following commands.
 
 ```
 pip install -r requirements.txt
@@ -45,15 +24,7 @@ Then follow the instructions in the notebook to run the webui.
 
 ## Colab notebook
 
-For those without a powerful enough NVIDIA GPU, you may try AICoverGen out using Google Colab.
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SociallyIneptWeeb/AICoverGen/blob/main/AICoverGen_colab.ipynb)
-
-For those who face issues with Google Colab notebook disconnecting after a few minutes, here's an alternative that doesn't use the WebUI.
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ardha27/AICoverGen-NoUI-Colab/blob/main/CoverGen_No_UI.ipynb)
-
-For those who want to run this locally, follow the setup guide below.
+(Hopefully coming soon)
 
 ## Setup
 
@@ -65,9 +36,6 @@ Follow the instructions [here](https://git-scm.com/book/en/v2/Getting-Started-In
 
 Follow the instructions [here](https://www.hostinger.com/tutorials/how-to-install-ffmpeg) to install ffmpeg on your computer.
 
-### Install sox
-
-Follow the instructions [here](https://www.tutorialexample.com/a-step-guide-to-install-sox-sound-exchange-on-windows-10-python-tutorial/) to install sox and add it to your Windows path environment.
 
 ### Clone AICoverGen repository
 
@@ -81,7 +49,7 @@ pip install -r requirements.txt
 
 ### Download required models
 
-Run the following command to download the required MDXNET vocal separation models and hubert base model.
+Run the following command to download the required hubert base model.
 
 ```
 python src/download_models.py
@@ -90,7 +58,7 @@ python src/download_models.py
 
 ## Usage with WebUI
 
-To run the AICoverGen WebUI, run the following command.
+To run the RVC Voice Changer WebUI, run the following command.
 
 ```
 python src/webui.py
@@ -114,31 +82,56 @@ Navigate to the `Download model` tab, and paste the download link to the RVC mod
 You may search the [AI Hub Discord](https://discord.gg/aihub) where already trained voice models are available for download. You may refer to the examples for how the download link should look like.
 The downloaded zip file should contain the .pth model file and an optional .index file.
 
-Once the 2 input fields are filled in, simply click `Download`! Once the output message says `[NAME] Model successfully downloaded!`, you should be able to use it in the `Generate` tab after clicking the refresh models button!
+Once the 2 input fields are filled in, simply click `Download`! Once the output message says `[NAME] Model successfully downloaded!`, you should be able to use it in the `Convert Voice` tab after clicking the refresh models button!
 
 ### Upload RVC models via WebUI
 
 ![](images/webui_upload_model.png?raw=true)
 
-For people who have trained RVC v2 models locally and would like to use them for AI Cover generations.
+For people who have trained RVC v2 models locally and would like to use them for voice conversion.
 Navigate to the `Upload model` tab, and follow the instructions.
-Once the output message says `[NAME] Model successfully uploaded!`, you should be able to use it in the `Generate` tab after clicking the refresh models button!
-
+Once the output message says `[NAME] Model successfully uploaded!`, you should be able to use it in the `Convert Voice` tab after clicking the refresh models button!
 
 ### Running the pipeline via WebUI
 
 ![](images/webui_generate.png?raw=true)
 
-- From the Voice Models dropdown menu, select the voice model to use. Click `Update` if you added the files manually to the [rvc_models](rvc_models) directory to refresh the list.
-- In the song input field, copy and paste the link to any song on YouTube or the full path to a local audio file.
-- Pitch should be set to either -12, 0, or 12 depending on the original vocals and the RVC AI modal. This ensures the voice is not *out of tune*.
-- Other advanced options for Voice conversion and audio mixing can be viewed by clicking the accordion arrow to expand.
+- From the Voice Models dropdown menu, select the voice model to use. Click `Refresh Models` if you added the files manually to the [rvc_models](rvc_models) directory to refresh the list.
+- In the Input Audio field, upload your audio file.
+- Adjust the pitch as needed. This changes the pitch of the output voice.
+- Other advanced options for Voice conversion can be viewed by clicking the accordion arrow to expand.
 
-Once all Main Options are filled in, click `Generate` and the AI generated cover should appear in a less than a few minutes depending on your GPU.
+Once all options are filled in, click `Convert` and the AI generated voice should appear in a few moments depending on your GPU.
 
 ## Usage with CLI
 
-### Manual Download of RVC models
+### Running the pipeline
+
+To run the voice conversion pipeline using the command line, run the following command:
+
+```
+python src/main.py <input_audio> <rvc_model> [pitch] [f0_method] [index_rate] [filter_radius] [rms_mix_rate] [protect]
+```
+
+| Parameter                  | Description |
+|----------------------------|-------------|
+| `input_audio`              | Path to the input audio file. |
+| `rvc_model`                | Name of the RVC model to use. |
+| `pitch`                    | (Optional) Pitch change in semitones. Default is 0. |
+| `f0_method`                | (Optional) Pitch detection algorithm. Options: 'rmvpe' (default) or 'mangio-crepe'. |
+| `index_rate`               | (Optional) Index rate for the voice conversion. Default is 0.5. Range: 0 to 1. |
+| `filter_radius`            | (Optional) Filter radius for median filtering. Default is 3. Range: 0 to 7. |
+| `rms_mix_rate`             | (Optional) RMS mix rate. Default is 0.25. Range: 0 to 1. |
+| `protect`                  | (Optional) Protect rate to preserve some original voice characteristics. Default is 0.33. Range: 0 to 0.5. |
+
+Example usage:
+```
+python src/main.py "path/to/input/audio.wav" "JohnDoe" 2 rmvpe 0.7 3 0.3 0.35
+```
+This command will convert the voice in "audio.wav" using the "JohnDoe" RVC model, raising the pitch by 2 semitones, using the 'rmvpe' pitch detection algorithm, with an index rate of 0.7, filter radius of 3, RMS mix rate of 0.3, and protect rate of 0.35.
+
+
+## Manual Download of RVC models
 
 Unzip (if needed) and transfer the `.pth` and `.index` files to a new folder in the [rvc_models](rvc_models) directory. Each folder should only contain one `.pth` and one `.index` file.
 
@@ -153,41 +146,10 @@ The directory structure should look something like this:
 │   │   └── added_IVF2237_Flat_nprobe_1_v2.index
 │   ├── MODELS.txt
 │   └── hubert_base.pt
-├── mdxnet_models
-├── song_output
+├── voice_output
 └── src
  ```
 
-### Running the pipeline
-
-To run the AI cover generation pipeline using the command line, run the following command.
-
-```
-python src/main.py [-h] -i SONG_INPUT -dir RVC_DIRNAME -p PITCH_CHANGE [-k | --keep-files | --no-keep-files] [-ir INDEX_RATE] [-fr FILTER_RADIUS] [-rms RMS_MIX_RATE] [-palgo PITCH_DETECTION_ALGO] [-hop CREPE_HOP_LENGTH] [-pro PROTECT] [-mv MAIN_VOL] [-bv BACKUP_VOL] [-iv INST_VOL] [-pall PITCH_CHANGE_ALL] [-rsize REVERB_SIZE] [-rwet REVERB_WETNESS] [-rdry REVERB_DRYNESS] [-rdamp REVERB_DAMPING] [-oformat OUTPUT_FORMAT]
-```
-
-| Flag                                       | Description |
-|--------------------------------------------|-------------|
-| `-h`, `--help`                             | Show this help message and exit. |
-| `-i SONG_INPUT`                            | Link to a song on YouTube or path to a local audio file. Should be enclosed in double quotes for Windows and single quotes for Unix-like systems. |
-| `-dir MODEL_DIR_NAME`                      | Name of folder in [rvc_models](rvc_models) directory containing your `.pth` and `.index` files for a specific voice. |
-| `-p PITCH_CHANGE`                          | Change pitch of AI vocals in octaves. Set to 0 for no change. Generally, use 1 for male to female conversions and -1 for vice-versa. |
-| `-k`                                       | Optional. Can be added to keep all intermediate audio files generated. e.g. Isolated AI vocals/instrumentals. Leave out to save space. |
-| `-ir INDEX_RATE`                           | Optional. Default 0.5. Control how much of the AI's accent to leave in the vocals. 0 <= INDEX_RATE <= 1. |
-| `-fr FILTER_RADIUS`                        | Optional. Default 3. If >=3: apply median filtering median filtering to the harvested pitch results. 0 <= FILTER_RADIUS <= 7. |
-| `-rms RMS_MIX_RATE`                        | Optional. Default 0.25. Control how much to use the original vocal's loudness (0) or a fixed loudness (1). 0 <= RMS_MIX_RATE <= 1. |
-| `-palgo PITCH_DETECTION_ALGO`              | Optional. Default rmvpe. Best option is rmvpe (clarity in vocals), then mangio-crepe (smoother vocals). |
-| `-hop CREPE_HOP_LENGTH`                    | Optional. Default 128. Controls how often it checks for pitch changes in milliseconds when using mangio-crepe algo specifically. Lower values leads to longer conversions and higher risk of voice cracks, but better pitch accuracy. |
-| `-pro PROTECT`                             | Optional. Default 0.33. Control how much of the original vocals' breath and voiceless consonants to leave in the AI vocals. Set 0.5 to disable. 0 <= PROTECT <= 0.5. |
-| `-mv MAIN_VOCALS_VOLUME_CHANGE`            | Optional. Default 0. Control volume of main AI vocals. Use -3 to decrease the volume by 3 decibels, or 3 to increase the volume by 3 decibels. |
-| `-bv BACKUP_VOCALS_VOLUME_CHANGE`          | Optional. Default 0. Control volume of backup AI vocals. |
-| `-iv INSTRUMENTAL_VOLUME_CHANGE`           | Optional. Default 0. Control volume of the background music/instrumentals. |
-| `-pall PITCH_CHANGE_ALL`                   | Optional. Default 0. Change pitch/key of background music, backup vocals and AI vocals in semitones. Reduces sound quality slightly. |
-| `-rsize REVERB_SIZE`                       | Optional. Default 0.15. The larger the room, the longer the reverb time. 0 <= REVERB_SIZE <= 1. |
-| `-rwet REVERB_WETNESS`                     | Optional. Default 0.2. Level of AI vocals with reverb. 0 <= REVERB_WETNESS <= 1. |
-| `-rdry REVERB_DRYNESS`                     | Optional. Default 0.8. Level of AI vocals without reverb. 0 <= REVERB_DRYNESS <= 1. |
-| `-rdamp REVERB_DAMPING`                    | Optional. Default 0.7. Absorption of high frequencies in the reverb. 0 <= REVERB_DAMPING <= 1. |
-| `-oformat OUTPUT_FORMAT`                   | Optional. Default mp3. wav for best quality and large file size, mp3 for decent quality and small file size. |
 
 
 ## Terms of Use
@@ -195,15 +157,10 @@ python src/main.py [-h] -i SONG_INPUT -dir RVC_DIRNAME -p PITCH_CHANGE [-k | --k
 The use of the converted voice for the following purposes is prohibited.
 
 * Criticizing or attacking individuals.
-
 * Advocating for or opposing specific political positions, religions, or ideologies.
-
 * Publicly displaying strongly stimulating expressions without proper zoning.
-
 * Selling of voice models and generated voice clips.
-
 * Impersonation of the original owner of the voice with malicious intentions to harm/hurt others.
-
 * Fraudulent purposes that lead to identity theft or fraudulent phone calls.
 
 ## Disclaimer

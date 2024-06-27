@@ -24,7 +24,7 @@ bh, ah = signal.butter(N=5, Wn=48, btype="high", fs=16000)
 input_audio_path2wav = {}
 
 
-@lru_cache
+@lru_cache(maxsize=None)
 def cache_harvest_f0(input_audio_path, fs, f0max, f0min, frame_period):
     audio = input_audio_path2wav[input_audio_path]
     f0, t = pyworld.harvest(
@@ -365,7 +365,7 @@ class VC(object):
         ) + 1
         f0_mel[f0_mel <= 1] = 1
         f0_mel[f0_mel > 255] = 255
-        f0_coarse = np.rint(f0_mel).astype(np.int)
+        f0_coarse = np.rint(f0_mel).astype(int)
 
         return f0_coarse, f0bak  # 1-0
 
