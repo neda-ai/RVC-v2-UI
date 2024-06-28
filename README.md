@@ -76,7 +76,7 @@ venv\Scripts\activate
 ```
 ##### macOS and Linux
 ```
-source venv/bin.activate
+source venv/bin/activate
 ```
 
 #### Install dependencies
