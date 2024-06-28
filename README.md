@@ -1,6 +1,6 @@
 # RVC Voice Changer
 
-[![Replicate](https://replicate.com/zsxkib/rvc-voice-changer/badge)](https://replicate.com/zsxkib/rvc-voice-changer)
+[![Replicate](https://replicate.com/pseudoram/rvc-v2)](https://replicate.com/pseudoram/rvc-v2)
 
 An autonomous pipeline to change voices using any RVC v2 trained AI voice model. This tool can be used to apply voice conversion to any audio input.
 
