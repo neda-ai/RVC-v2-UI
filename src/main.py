@@ -3,6 +3,7 @@ import sys
 import torch
 import urllib.parse
 import urllib.request
+import shutil
 import zipfile
 from rvc import rvc_infer, load_hubert, get_vc, Config
 
@@ -13,7 +14,7 @@ output_dir = os.path.join(BASE_DIR, 'voice_output')
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 is_half = False if device == "cpu" else True
 
-def download_online_model(url, dir_name, progress=None):
+def download_online_model(url, dir_name, overwrite=False):
     try:
         # Parse the URL and extract the filename
         parsed_url = urllib.parse.urlparse(url)
@@ -24,12 +25,19 @@ def download_online_model(url, dir_name, progress=None):
         
         extraction_folder = os.path.join(rvc_models_dir, dir_name)
         if os.path.exists(extraction_folder):
-            raise Exception(f'Voice model directory {dir_name} already exists!')
+            if overwrite:
+                print(f"[!] Voice model directory {dir_name} already exists. Overwriting...")
+                shutil.rmtree(extraction_folder)
+            else:
+                print(f"[!] Voice model directory {dir_name} already exists. Using existing model.")
+                return f"[+] Using existing model: {dir_name}"
 
         # Download the file
+        print(f"[*] Downloading model from {url}...")
         urllib.request.urlretrieve(url, zip_name)
         
         # Extract the zip file
+        print(f"[*] Extracting model to {extraction_folder}...")
         with zipfile.ZipFile(zip_name, 'r') as zip_ref:
             zip_ref.extractall(extraction_folder)
         
@@ -38,7 +46,7 @@ def download_online_model(url, dir_name, progress=None):
         
         return f'[+] {dir_name} Model successfully downloaded and extracted!'
     except Exception as e:
-        raise Exception(str(e))
+        raise Exception(f"Error downloading model: {str(e)}")
 
 def get_rvc_model(voice_model):
     model_dir = os.path.join(rvc_models_dir, voice_model)

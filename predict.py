@@ -94,6 +94,7 @@ class Predictor(BasePredictor):
             m.download_online_model(
                 url=custom_rvc_model_download_url,
                 dir_name=custom_rvc_model_download_name,
+                overwrite=True
             )
             rvc_model = custom_rvc_model_download_name
         else:
