@@ -21,11 +21,12 @@ class Predictor(BasePredictor):
         ),
         rvc_model: str = Input(
             description="RVC model for a specific voice. If using a custom model, this should match the name of the downloaded model. If a 'custom_rvc_model_download_url' is provided, this will be automatically set to the name of the downloaded model.",
-            default="Trump",
+            default="Obama",
             choices=[
+                "Obama",
                 "Trump",
-                "Biden",
-                "JoeRogan",
+                "Sandy",
+                "Rogan",
                 "Obama",
                 "CUSTOM",
             ],

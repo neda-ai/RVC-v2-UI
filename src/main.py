@@ -1,7 +1,9 @@
 import os
 import sys
 import torch
-import librosa
+import urllib.parse
+import urllib.request
+import zipfile
 from rvc import rvc_infer, load_hubert, get_vc, Config
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -10,6 +12,33 @@ output_dir = os.path.join(BASE_DIR, 'voice_output')
 
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 is_half = False if device == "cpu" else True
+
+def download_online_model(url, dir_name, progress=None):
+    try:
+        # Parse the URL and extract the filename
+        parsed_url = urllib.parse.urlparse(url)
+        zip_name = os.path.basename(parsed_url.path)
+        
+        # Remove any query parameters from the filename
+        zip_name = zip_name.split('?')[0]
+        
+        extraction_folder = os.path.join(rvc_models_dir, dir_name)
+        if os.path.exists(extraction_folder):
+            raise Exception(f'Voice model directory {dir_name} already exists!')
+
+        # Download the file
+        urllib.request.urlretrieve(url, zip_name)
+        
+        # Extract the zip file
+        with zipfile.ZipFile(zip_name, 'r') as zip_ref:
+            zip_ref.extractall(extraction_folder)
+        
+        # Remove the zip file
+        os.remove(zip_name)
+        
+        return f'[+] {dir_name} Model successfully downloaded and extracted!'
+    except Exception as e:
+        raise Exception(str(e))
 
 def get_rvc_model(voice_model):
     model_dir = os.path.join(rvc_models_dir, voice_model)
