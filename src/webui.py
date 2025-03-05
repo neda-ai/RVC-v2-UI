@@ -177,4 +177,4 @@ if __name__ == '__main__':
             upload_output_message = gr.Text(label='Output Message', interactive=False)
             upload_btn.click(upload_local_model, inputs=[upload_zip, upload_model_name], outputs=upload_output_message)
 
-    app.launch()
+    app.launch(server_name="0.0.0.0", debug=True)
