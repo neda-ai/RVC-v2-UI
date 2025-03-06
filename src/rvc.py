@@ -96,6 +96,15 @@ class Config:
 
 
 def load_hubert(device, is_half, model_path):
+    # Add safe globals for fairseq Dictionary class to handle PyTorch 2.6+ compatibility
+    try:
+        import torch.serialization
+        from fairseq.data.dictionary import Dictionary
+        torch.serialization.add_safe_globals([Dictionary])
+    except (ImportError, AttributeError):
+        # Older PyTorch versions don't have add_safe_globals
+        pass
+        
     models, saved_cfg, task = checkpoint_utils.load_model_ensemble_and_task([model_path], suffix='', )
     hubert = models[0]
     hubert = hubert.to(device)
@@ -110,7 +119,13 @@ def load_hubert(device, is_half, model_path):
 
 
 def get_vc(device, is_half, config, model_path):
-    cpt = torch.load(model_path, map_location='cpu')
+    try:
+        # First try with weights_only=False for PyTorch 2.6+ compatibility
+        cpt = torch.load(model_path, map_location='cpu', weights_only=False)
+    except TypeError:
+        # Fall back to default for older PyTorch versions that don't have weights_only parameter
+        cpt = torch.load(model_path, map_location='cpu')
+        
     if "config" not in cpt or "weight" not in cpt:
         raise ValueError(f'Incorrect format for {model_path}. Use a voice model trained using RVC v2 instead.')
 
