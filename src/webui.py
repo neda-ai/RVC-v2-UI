@@ -15,8 +15,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 rvc_models_dir = os.path.join(BASE_DIR, 'rvc_models')
 output_dir = os.path.join(BASE_DIR, 'voice_output')
 
-device = "cuda:0" if torch.cuda.is_available() else "cpu"
+device = "cuda" if torch.cuda.is_available() else "cpu"
 is_half = False if device == "cpu" else True
+
+# Add this for debugging
+if device != "cpu":
+    print(f"Using GPU: {torch.cuda.get_device_name()}")
+    print(f"GPU Memory: {torch.cuda.get_device_properties(0).total_memory / 1e9:.2f} GB")
+
+print(f"Using device: {device}")
 
 def get_current_models(models_dir):
     models_list = os.listdir(models_dir)
