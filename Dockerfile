@@ -24,7 +24,6 @@ WORKDIR /app
 
 # Copy requirements and install dependencies
 COPY requirements.txt .
-RUN pip3 install runpod==1.7.7
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Copy the application code
