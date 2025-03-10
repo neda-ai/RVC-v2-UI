@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     cuda-toolkit \
-    cudnn9-cuda-12
+    cudnn9-cuda-12 \
     python3.10 \
     python3-pip \
     python3-dev \
