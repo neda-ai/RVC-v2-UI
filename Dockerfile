@@ -1,4 +1,4 @@
-FROM runpod/base:0.6.2-cuda12.4.1
+FROM nvidia/cuda:12.4.1-cudnn-devel-ubuntu22.04
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive \
