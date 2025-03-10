@@ -24,6 +24,7 @@ WORKDIR /app
 
 # Copy requirements and install dependencies
 COPY requirements.txt .
+RUN export PATH="/usr/bin:$PATH"
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Copy the application code
