@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.4.1-cudnn-runtime-ubuntu22.04
+FROM nvidia/cuda:12.4.1-cudnn-devel-ubuntu22.04
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -16,12 +16,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
+RUN echo "install git"
+RUN apt install -y git
 # Create a working directory
 WORKDIR /app
 
 # Copy requirements and install dependencies
 COPY requirements.txt .
+RUN export PATH="/usr/bin:$PATH"
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Copy the application code
