@@ -9,10 +9,11 @@ import httpx
 import runpod
 import ufiles
 
-from src import config, main, schemas
+sys.path.insert(0, str((config.Settings / "src").resolve()))
+
+import config, main, schemas
 
 config.Settings.config_logger()
-sys.path.insert(0, str((config.Settings / "src").resolve()))
 
 
 def download_input_audio(url):
