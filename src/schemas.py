@@ -4,7 +4,7 @@ from typing import Literal
 
 from pydantic import BaseModel, field_validator
 
-from config import Settings
+from .config import Settings
 
 
 class RVCV2InputSchema(BaseModel):

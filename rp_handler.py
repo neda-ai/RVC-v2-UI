@@ -11,7 +11,7 @@ import ufiles
 
 from src import config, schemas
 
-sys.path.insert(0, str((config.Settings / "src").resolve()))
+sys.path.insert(0, os.path.abspath("src"))
 
 import main
 
