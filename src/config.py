@@ -4,6 +4,7 @@ import dataclasses
 import logging
 import logging.config
 import os
+import sys
 from pathlib import Path
 
 import dotenv
@@ -11,6 +12,8 @@ import torch
 from singleton import Singleton
 
 dotenv.load_dotenv()
+
+sys.path.insert(0, os.path.abspath("src"))
 
 
 @dataclasses.dataclass
