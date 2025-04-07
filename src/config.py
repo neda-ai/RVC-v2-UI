@@ -13,14 +13,15 @@ from singleton import Singleton
 
 dotenv.load_dotenv()
 
-sys.path.insert(0, os.path.abspath("src"))
+base_dir: Path = Path(__file__).resolve().parent.parent
+sys.path.insert(0, (base_dir / "src").as_posix())
 
 
 @dataclasses.dataclass
 class Settings(metaclass=Singleton):
     """Server config settings."""
 
-    base_dir: Path = Path(__file__).resolve().parent.parent
+    base_dir: Path = base_dir
     rvc_models_dir: Path = base_dir / "rvc_models"
     output_dir: Path = base_dir / "voice_output"
     device: str = "cuda:0" if torch.cuda.is_available() else "cpu"
