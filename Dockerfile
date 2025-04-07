@@ -26,11 +26,13 @@ COPY requirements.txt .
 RUN export PATH="/usr/bin:$PATH"
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-# Copy the application code
-COPY . .
+COPY src/download_models.py /app/src/download_models.py
 
 # Download required models
 RUN python3 src/download_models.py
+
+# Copy the application code
+COPY . .
 
 # Set the entrypoint
 ENTRYPOINT ["python3", "rp_handler.py"] 
