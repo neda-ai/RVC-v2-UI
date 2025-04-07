@@ -9,9 +9,11 @@ import httpx
 import runpod
 import ufiles
 
+from src import config, schemas
+
 sys.path.insert(0, str((config.Settings / "src").resolve()))
 
-import config, main, schemas
+import main
 
 config.Settings.config_logger()
 
