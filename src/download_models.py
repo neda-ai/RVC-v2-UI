@@ -9,6 +9,7 @@ rvc_models_dir = BASE_DIR / "rvc_models"
 
 
 def dl_model(link, model_name, dir_name):
+    rvc_models_dir.mkdir(parents=True, exist_ok=True)
     with requests.get(f"{link}{model_name}") as r:
         r.raise_for_status()
         with open(dir_name / model_name, "wb") as f:
