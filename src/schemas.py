@@ -22,7 +22,7 @@ class RVCV2InputSchema(BaseModel):
     output_format: Literal["mp3", "wav"] = "wav"
 
     @field_validator("input_audio")
-    def validate_input_audio(cls, v):
+    def validate_input_audio(cls, v: str) -> str:
         if not v.startswith(("http://", "https://")):
             raise ValueError("Input audio must be a URL")
         return v

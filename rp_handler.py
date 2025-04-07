@@ -104,8 +104,8 @@ def handler(event):
             ufiles_base_url=config.Settings.UFILES_BASE_URL,
         )
         uploaded = ufiles_client.upload_file(
-            file_path=final_output_path,
-            file_name=input_data.upload_filename,
+            filepath=final_output_path,
+            filename=input_data.upload_filename,
         )
         output = {
             "output_url": uploaded.url,
