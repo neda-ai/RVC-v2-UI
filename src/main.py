@@ -7,7 +7,7 @@ import zipfile
 
 import torch
 
-from rvc import Config, get_vc, load_hubert, rvc_infer
+from .rvc import Config, get_vc, load_hubert, rvc_infer
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 rvc_models_dir = os.path.join(BASE_DIR, "rvc_models")
