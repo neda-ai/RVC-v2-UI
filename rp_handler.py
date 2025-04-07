@@ -1,5 +1,6 @@
 import logging
 import os
+import sys
 import tempfile
 import urllib.parse
 from pathlib import Path
@@ -11,6 +12,7 @@ import ufiles
 from src import config, main, schemas
 
 config.Settings.config_logger()
+sys.path.insert(0, str((config.Settings / "src").resolve()))
 
 
 def download_input_audio(url):

@@ -4,7 +4,6 @@ import dataclasses
 import logging
 import logging.config
 import os
-import sys
 from pathlib import Path
 
 import dotenv
@@ -13,15 +12,12 @@ from singleton import Singleton
 
 dotenv.load_dotenv()
 
-base_dir: Path = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str((base_dir / "src").resolve()))
-
 
 @dataclasses.dataclass
 class Settings(metaclass=Singleton):
     """Server config settings."""
 
-    base_dir: Path = base_dir
+    base_dir: Path = Path(__file__).resolve().parent.parent
     rvc_models_dir: Path = base_dir / "rvc_models"
     output_dir: Path = base_dir / "voice_output"
     device: str = "cuda:0" if torch.cuda.is_available() else "cpu"
