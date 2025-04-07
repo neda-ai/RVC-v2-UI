@@ -14,7 +14,7 @@ from singleton import Singleton
 dotenv.load_dotenv()
 
 base_dir: Path = Path(__file__).resolve().parent.parent
-sys.path.insert(0, (base_dir / "src").as_posix())
+sys.path.insert(0, str((base_dir / "src").resolve()))
 
 
 @dataclasses.dataclass
