@@ -15,3 +15,5 @@ soundfile==0.12.1
 torch==2.4.0+cu124
 torchcrepe==0.0.20
 tqdm==4.65.0
+ufiles
+httpx

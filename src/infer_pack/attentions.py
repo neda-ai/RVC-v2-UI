@@ -1,12 +1,10 @@
-import copy
 import math
-import numpy as np
+
 import torch
 from torch import nn
 from torch.nn import functional as F
 
 from infer_pack import commons
-from infer_pack import modules
 from infer_pack.modules import LayerNorm
 
 
@@ -293,7 +291,7 @@ class MultiHeadAttention(nn.Module):
         return ret
 
     def _get_relative_embeddings(self, relative_embeddings, length):
-        max_relative_position = 2 * self.window_size + 1
+        2 * self.window_size + 1
         # Pad first before slice to avoid using cond ops.
         pad_length = max(length - (self.window_size + 1), 0)
         slice_start_position = max((self.window_size + 1) - length, 0)

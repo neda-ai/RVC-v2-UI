@@ -1,17 +1,18 @@
 import os
 import sys
 import urllib.parse
-from argparse import Namespace
-from cog import BasePredictor, Input, Path as CogPath
+
+from cog import BasePredictor, Input
+from cog import Path as CogPath
 
 sys.path.insert(0, os.path.abspath("src"))
 
 import main as m
 
+
 class Predictor(BasePredictor):
     def setup(self):
         """Load the model into memory to make running multiple predictions efficient"""
-        pass
 
     def predict(
         self,
@@ -94,13 +95,11 @@ class Predictor(BasePredictor):
             m.download_online_model(
                 url=custom_rvc_model_download_url,
                 dir_name=custom_rvc_model_download_name,
-                overwrite=True
+                overwrite=True,
             )
             rvc_model = custom_rvc_model_download_name
         else:
-            print(
-                "[!] Since no URL was provided, we will use the selected RVC model."
-            )
+            print("[!] Since no URL was provided, we will use the selected RVC model.")
 
         rvc_dirname = rvc_model
         if not os.path.exists(os.path.join(m.rvc_models_dir, rvc_dirname)):
@@ -116,7 +115,7 @@ class Predictor(BasePredictor):
             index_rate,
             filter_radius,
             rms_mix_rate,
-            protect
+            protect,
         )
         print(f"[+] Converted audio generated at {output_path}")
 
