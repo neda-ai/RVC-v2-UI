@@ -3,6 +3,7 @@ import os
 import sys
 import tempfile
 import urllib.parse
+from datetime import datetime
 from pathlib import Path
 
 import httpx
@@ -79,7 +80,13 @@ def handler(event):
 
         # Validate RVC model exists
         if not input_data.check_rvc_model_exists():
-            return {"error": f"The folder {input_data.rvc_model_path} does not exist."}
+            result = {"error": f"The folder {input_data.rvc_model_path} does not exist."}
+            if input_data.webhook_url:
+                response = httpx.post(input_data.webhook_url, json=result)
+                # response.raise_for_status()
+                logging.info(f"[+] Webhook sent {response.status_code}")
+                logging.info(f"[+] Webhook response: {response.text}")
+            return result
 
         # Perform voice conversion
         output_path = main.voice_conversion(
@@ -108,6 +115,7 @@ def handler(event):
             filename=input_data.upload_filename,
         )
         output = {
+            "created_at": datetime.now(),
             "output_url": uploaded.url,
             "format": input_data.output_format,
             "message": "Voice conversion completed successfully",
@@ -132,6 +140,11 @@ def handler(event):
         error_traceback = traceback.format_exc()
         logging.error(f"Error: {error_message}")
         logging.error(error_traceback)
+        if input_data.webhook_url:
+            response = httpx.post(input_data.webhook_url, json={"error": error_message, "traceback": error_traceback})
+            # response.raise_for_status()
+            logging.info(f"[+] Webhook sent {response.status_code}")
+            logging.info(f"[+] Webhook response: {response.text}")
         return {"error": error_message, "traceback": error_traceback}
 
 
