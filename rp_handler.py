@@ -115,7 +115,7 @@ def handler(event):
             filename=input_data.upload_filename,
         )
         output = {
-            "created_at": datetime.now(),
+            "created_at": datetime.now().isoformat(),
             "output_url": uploaded.url,
             "format": input_data.output_format,
             "message": "Voice conversion completed successfully",
